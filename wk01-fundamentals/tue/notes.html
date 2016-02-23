@@ -1,0 +1,99 @@
+<!doctype html> <html> <head> <title>Title</title> <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/> <style type="text/css"> @import url(https://fonts.googleapis.com/css?family=Yanone+Kaffeesatz); @import url(https://fonts.googleapis.com/css?family=Droid+Serif:400,700,400italic); @import url(https://fonts.googleapis.com/css?family=Ubuntu+Mono:400,700,400italic); body{font-family: 'Droid Serif';}h1, h2, h3{font-family: 'Yanone Kaffeesatz'; font-weight: 400; margin-bottom: 0;}.remark-slide-content h1{font-size: 3em;}.remark-slide-content h2{font-size: 2em;}.remark-slide-content h3{font-size: 1.6em;}.footnote{position: absolute; bottom: 3em;}li p{line-height: 1.25em;}.red{color: #fa0000;}.large{font-size: 2em;}a, a > code{color: rgb(249, 38, 114); text-decoration: none;}code{-moz-border-radius: 5px; -web-border-radius: 5px; background: #e7e8e2; border-radius: 5px;}.remark-code, .remark-inline-code{font-family: 'Ubuntu Mono';}.remark-code-line-highlighted{background-color: #373832;}.pull-left{float: left; width: 47%;}.pull-right{float: right; width: 47%;}.pull-right ~ p{clear: both;}#slideshow .slide .content code{font-size: 0.8em;}#slideshow .slide .content pre code{font-size: 0.9em; padding: 15px;}.inverse{background: #272822; color: #777872; text-shadow: 0 0 20px #333;}.inverse h1, .inverse h2{color: #f3f3f3; line-height: 0.8em;}#slide-inverse .footnote{bottom: 12px; left: 20px;}#slide-how .slides{font-size: 0.9em; position: absolute; top: 151px; right: 140px;}#slide-how .slides h3{margin-top: 0.2em;}#slide-how .slides .first, #slide-how .slides .second{padding: 1px 20px; height: 90px; width: 120px; -moz-box-shadow: 0 0 10px #777; -webkit-box-shadow: 0 0 10px #777; box-shadow: 0 0 10px #777;}#slide-how .slides .first{background: #fff; position: absolute; top: 20%; left: 20%; z-index: 1;}#slide-how .slides .second{position: relative; background: #fff; z-index: 0;}.left-column{color: #777; width: 20%; height: 92%; float: left;}.left-column h2:last-of-type, .left-column h3:last-child{color: #000;}.right-column{width: 75%; float: right; padding-top: 1em;} </style> </head> <body> <textarea id="source"> # Good Morning!
+
+<img src="http://i.imgur.com/8HRBMnm.jpg" height="600px" />
+
+---
+
+## Homework Review!
+
+* Anyone want to present their solution for the guessing game or destutter?
+
+---
+
+# Today's Goals
+
+1. Understand how to use Pry to make debugging/inspection easier
+2. Practice decomposing problems and modeling data with Hangman
+3. Reinforce understanding of functions, arguments, and scope
+
+---
+
+# Better Testing & Debugging w/ Pry
+
+1. You can use it by running pry on the command line instead of irb.
+
+--
+
+2. Other than having tab-completion, syntax highlighting, and awesome commands
+   like `ls`, `whereami` and `wtf`, we'll see next week it allows searching
+   for methods, reading docs, and more.
+
+--
+
+3. But most importantly, you can put `require 'pry'` at the top of your ruby file
+   and `binding.pry` in the place you want to debug or see what's happening and
+   when your program reaches that point in execution, a shell will automatically open!
+   No more annoying copying and pasting into IRB!
+
+---
+
+# 2. Let's Write Hangman!
+
+* One of the first substantive scripts I wrote was a terminal version of Hangman back in 2008.
+* Let's look at my old code and then write a better version!
+* It's written in a language called "Common Lisp". Stay calm. :D
+
+--
+
+There are three big takeaways to look for:
+
+--
+
+1. Even though we don't understand the language, we can pick up the high level structure.
+   Things like function calling, parameter passing, arrays are not so different!
+
+--
+
+2. A better design is generally better in *any* language.
+
+--
+
+3. If we can enforce a rule (aka **invariant**) by what data structures we use, that is almost always a good choice.
+
+---
+
+# 2. Moar hangman ...
+
+A design process:
+
+* Determine data requirements
+* Create abstract description
+
+--
+
+Options for how to start:
+
+* Pick the hardest thing first
+* Pick the best understood (i.e. easiest) thing first
+
+--
+
+## What's hard about hangman?
+
+2 main things:
+
+* Deciding if the game is over
+* Figuring out the half-completed word
+
+Maybe also input validation but we'll save that for later. ;)
+
+---
+
+# Tonight's Homework
+
+### [Happy Hacking!][homework]
+
+.center[![computer_doge](http://40.media.tumblr.com/tumblr_m12hieqxHq1rrgr1no1_500.jpg)]
+
+[homework]: https://github.com/TIY-ATL-ROR-2015-Sep/lectures/blob/master/wk01-ruby/tue/questions.md
+ </textarea> <script src="https://gnab.github.io/remark/downloads/remark-latest.min.js"> </script> <script> var slideshow = remark.create(); </script> </body> </html>
