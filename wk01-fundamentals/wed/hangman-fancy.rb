@@ -123,6 +123,7 @@ def play
 
   while more
     hangman
+    more = play_again?
   end
 end
 
