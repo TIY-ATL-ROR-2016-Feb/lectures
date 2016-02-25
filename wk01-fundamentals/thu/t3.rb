@@ -2,6 +2,18 @@ require "pry"
 
 board = [1,2,3,4,5,6,7,8,9]
 
+WINS = [[1,2,3],
+        [4,5,6],
+        [7,8,9],
+        [1,4,7],
+       ]
+
+## DATA IN THE SYSTEM
+# * board
+# * player1 (name/piece), player2
+# * win conditions
+# * current_player => player1, player2
+
 # board = {
 #   1 => 1,
 #   2 => 2,
@@ -24,5 +36,7 @@ def display_board(board)
     #{board[6]} | #{board[7]} | #{board[8]}
     "
 end
+
+
 
 binding.pry
