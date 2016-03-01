@@ -1,29 +1,18 @@
-## Guessing Game Redux
+In this directory, you'll find a file called `tests.rb`.
+It contains unit tests for tonight's homework which you can run with `ruby tests.rb`.
 
-If you haven't done so already, create a github repo
-for your homework assignments. In that repo, add a folder
-for today's OO Guessing Game and copy in the files from today's
-lecture: `oo_guesser.rb`, `human.rb`, `random.rb`, `counting.rb`.
+## Caffeine Time
 
-Remember, **Rickard and I** are here for support with *git*.
+[![Zoolander](https://camo.githubusercontent.com/f2afba3861c39587a1ff4788765f13d6ad7a700c/687474703a2f2f6d656469612e67697068792e636f6d2f6d656469612f62585164437345744c4b7259492f67697068792e676966)]
 
-### Normal Mode
+For this assignment, copy the `tests.rb` file into
+a folder for today's homework in your labs directory.
 
-Then add a new file `smart.rb` containing a `SmartPlayer` class.
-The new player should make an intelligent to decision about how
-to guess based on the result of the last guess. *Note* that this
-requires tweaking the definition of `get_guess` to take an
-argument in each player class and that the result of the last
-guess must be passed from the `GuessingGame` class.
+Your task will be to add `coffee.rb` and `human.rb` files to that folder
+and write code in those files such that the tests pass.
 
-### Nightmare Mode
+The general workflow when you have tests is:
 
-Choose one of the following:
-
-* Change the guessing game to tell the player "Warmer" or "Colder"
-  instead of "Too High" or "Too Low". Note that this necessitates
-  changes to the `GuessingGame` class and your `SmartPlayer` class.
-
-* Try to adapt Hangman to use classes in preparation for
-  tomorrow's lecture. There should be at least Game and Human
-  classes.
+* Run the tests (with `ruby tests.rb` in this case)
+* Pick the first failure.
+* Try to write code to make the test pass.
