@@ -1,81 +1,39 @@
-require './dictionary'
-require './player'
-require './human'
-require './random'
-
 require 'minitest/autorun'
 
-class HumanPlayerTests < MiniTest::Test
-  def setup
-    @player = HumanPlayer.new
-    @brit = HumanPlayer.new("Brit")
+require './human'
+require './coffee'
+
+class CaffeineTest < MiniTest::Test
+  def test_humans_tend_to_be_sleepy
+    dave = Human.new "Dave"
+    assert dave.alertness < 0.1
   end
 
-  def test_can_make_player
-    assert @player
-    assert @brit
+  def test_humans_need_coffee
+    matt = Human.new "Matt"
+    refute matt.has_coffee?
+    assert matt.needs_coffee?
   end
 
-  def test_can_get_names
-    assert_equal @brit.name, "Brit"
-    assert_equal @player.name, "The Nameless One"
+  def test_humans_can_drink_coffee
+    mallory = Human.new "Mallory"
+    tsmf = Coffee.new "Triple Shot Mocha Frappuccino"
+    assert tsmf.full?
+
+    mallory.buy tsmf
+    mallory.drink!
+    assert_within_epsilon mallory.alertness, 0.33, 0.1
+    refute tsmf.full?
+    refute tsmf.empty?
   end
 
-  def test_can_validate_guess
-    assert @player.valid_guess?("a")
-    refute @player.valid_guess?("cookies")
-    refute @player.valid_guess?("A")
-    refute @player.valid_guess?("!")
-    refute @player.valid_guess?("42")
-  end
+  def test_humans_can_drink_all_the_coffee
+    mallory = Human.new "Mallory"
+    tsmf = Coffee.new "Triple Shot Mocha Frappuccino"
+    mallory.buy tsmf
 
-  def test_can_get_guess
-    valid_input = ('a' .. 'z').to_a
-    100.times do
-      guess = valid_input.sample
-      @player.stub :get_input, guess do
-        assert_equal @player.get_guess, guess
-      end
-    end
-  end
-end
-
-class RandomPlayerTests < MiniTest::Test
-  def test_can_build_player
-    assert RandomPlayer.new
-    assert RandomPlayer.new("Rando Calrissian")
-  end
-
-  def test_only_returns_valid_guesses
-    player = RandomPlayer.new
-    100.times do
-      guess = player.get_guess
-      alphabet = ('a'..'z').to_a
-      assert_includes(alphabet, guess)
-    end
-  end
-end
-
-class DictionaryTest < MiniTest::Test
-  def test_can_build_dictionary
-    dict = Dictionary.new
-    assert dict.is_a?(Dictionary)
-  end
-
-  def test_can_get_random_word
-    dict = Dictionary.new
-    1000.times do
-      word1 = dict.random_word
-      word2 = dict.random_word
-      assert word1 != word2
-    end
-  end
-
-  def test_only_return_valid_words
-    dict = Dictionary.new
-    100.times do
-      word = dict.random_word
-      assert_match(/^[a-z]{4,20}$/, word)
-    end
+    3.times { mallory.drink! }
+    assert tsmf.empty?
+    assert mallory.alertness > 0.9
   end
 end
