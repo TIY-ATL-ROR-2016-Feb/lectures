@@ -5,7 +5,7 @@ require "./static_dict"
 require "./file_dict"
 require "./game"
 
-dict = FileDict.new("/Users/brit/english-dict.txt")
+dict = FileDict.new("english-dict.txt")
 hangman = Game.new(dict, RandomPlayer.new)
 hangman.game_over?
 
