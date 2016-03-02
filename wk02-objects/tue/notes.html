@@ -1,4 +1,14 @@
-<!doctype html> <html> <head> <title>Title</title> <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/> <style type="text/css"> @import url(https://fonts.googleapis.com/css?family=Yanone+Kaffeesatz); @import url(https://fonts.googleapis.com/css?family=Droid+Serif:400,700,400italic); @import url(https://fonts.googleapis.com/css?family=Ubuntu+Mono:400,700,400italic); body{font-family: 'Droid Serif';}h1, h2, h3{font-family: 'Yanone Kaffeesatz'; font-weight: 400; margin-bottom: 0;}.remark-slide-content h1{font-size: 3em;}.remark-slide-content h2{font-size: 2em;}.remark-slide-content h3{font-size: 1.6em;}.footnote{position: absolute; bottom: 3em;}li p{line-height: 1.25em;}.red{color: #fa0000;}.large{font-size: 2em;}a, a > code{color: rgb(249, 38, 114); text-decoration: none;}code{-moz-border-radius: 5px; -web-border-radius: 5px; background: #e7e8e2; border-radius: 5px;}.remark-code, .remark-inline-code{font-family: 'Ubuntu Mono';}.remark-code-line-highlighted{background-color: #373832;}.pull-left{float: left; width: 47%;}.pull-right{float: right; width: 47%;}.pull-right ~ p{clear: both;}#slideshow .slide .content code{font-size: 0.8em;}#slideshow .slide .content pre code{font-size: 0.9em; padding: 15px;}.inverse{background: #272822; color: #777872; text-shadow: 0 0 20px #333;}.inverse h1, .inverse h2{color: #f3f3f3; line-height: 0.8em;}#slide-inverse .footnote{bottom: 12px; left: 20px;}#slide-how .slides{font-size: 0.9em; position: absolute; top: 151px; right: 140px;}#slide-how .slides h3{margin-top: 0.2em;}#slide-how .slides .first, #slide-how .slides .second{padding: 1px 20px; height: 90px; width: 120px; -moz-box-shadow: 0 0 10px #777; -webkit-box-shadow: 0 0 10px #777; box-shadow: 0 0 10px #777;}#slide-how .slides .first{background: #fff; position: absolute; top: 20%; left: 20%; z-index: 1;}#slide-how .slides .second{position: relative; background: #fff; z-index: 0;}.left-column{color: #777; width: 20%; height: 92%; float: left;}.left-column h2:last-of-type, .left-column h3:last-child{color: #000;}.right-column{width: 75%; float: right; padding-top: 1em;} </style> </head> <body> <textarea id="source"> # It's Time
+<!doctype html> <html> <head> <title>Title</title> <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/> <style type="text/css"> @import url(https://fonts.googleapis.com/css?family=Yanone+Kaffeesatz); @import url(https://fonts.googleapis.com/css?family=Droid+Serif:400,700,400italic); @import url(https://fonts.googleapis.com/css?family=Ubuntu+Mono:400,700,400italic); body{font-family: 'Droid Serif';}h1, h2, h3{font-family: 'Yanone Kaffeesatz'; font-weight: 400; margin-bottom: 0;}.remark-slide-content h1{font-size: 3em;}.remark-slide-content h2{font-size: 2em;}.remark-slide-content h3{font-size: 1.6em;}.footnote{position: absolute; bottom: 3em;}li p{line-height: 1.25em;}.red{color: #fa0000;}.large{font-size: 2em;}a, a > code{color: rgb(249, 38, 114); text-decoration: none;}code{-moz-border-radius: 5px; -web-border-radius: 5px; background: #e7e8e2; border-radius: 5px;}.remark-code, .remark-inline-code{font-family: 'Ubuntu Mono';}.remark-code-line-highlighted{background-color: #373832;}.pull-left{float: left; width: 47%;}.pull-right{float: right; width: 47%;}.pull-right ~ p{clear: both;}#slideshow .slide .content code{font-size: 0.8em;}#slideshow .slide .content pre code{font-size: 0.9em; padding: 15px;}.inverse{background: #272822; color: #777872; text-shadow: 0 0 20px #333;}.inverse h1, .inverse h2{color: #f3f3f3; line-height: 0.8em;}#slide-inverse .footnote{bottom: 12px; left: 20px;}#slide-how .slides{font-size: 0.9em; position: absolute; top: 151px; right: 140px;}#slide-how .slides h3{margin-top: 0.2em;}#slide-how .slides .first, #slide-how .slides .second{padding: 1px 20px; height: 90px; width: 120px; -moz-box-shadow: 0 0 10px #777; -webkit-box-shadow: 0 0 10px #777; box-shadow: 0 0 10px #777;}#slide-how .slides .first{background: #fff; position: absolute; top: 20%; left: 20%; z-index: 1;}#slide-how .slides .second{position: relative; background: #fff; z-index: 0;}.left-column{color: #777; width: 20%; height: 92%; float: left;}.left-column h2:last-of-type, .left-column h3:last-child{color: #000;}.right-column{width: 75%; float: right; padding-top: 1em;} </style> </head> <body> <textarea id="source"> # First Things First
+
+* I'm proud of y'all. I know this stuff is hard.
+
+* Our pace is pretty crazy around here.
+
+* Continue to trust that this will all sink in with time.
+
+---
+
+# It's Time
 
 * **Objects** and **Messages**!
 
@@ -14,11 +24,6 @@
 
 * Also, unit testing things!
 
---
-
-* Maybe even some twitter stuff I hulked out about this weekend?
-  Interview question rants, etc.
-
 ---
 
 # The Whole "Object Oriented" Thing ...
@@ -29,28 +34,64 @@
 * Object(n): A specific data type guaranteed to understand
   a certain set of messages.
 
-* Some interesting methods: .id, .object_id, .class, .ancestors
+* Some interesting methods: .object_id, .class, .ancestors
 
 * Some interesting magic: .send
 
 ---
 
-# How do method calls work? (aka "Dispatch")
+# Classes Recap
+
+3 different pieces to classes:
+
+--
+
+1. Definining them, e.g. `class Foo ..... end`
+
+--
+
+2. Building them,   e.g. `toy = Foo.new`
+
+--
+
+3. Using them,      e.g. `toy.explode!(maybe_an_arg_too)`
+
+--
+
+Off the top of my head, 7 classes I can think of seem kind of special **but aren't**:
+
+1. Booleans
+2. Fixnums
+3. Floats
+4. Strings
+5. Symbols
+6. Arrays
+7. Hashes
 
 ---
 
-# Classes are Open
+# So Unit Testing
 
----
+### What?
 
-# Testing
+Code that "exercises" some other piece of our code and makes sure it works a certain way.
 
-* TDD, BDD, etc etc.
-* Just methods you run to exercise code.
+--
+
+### Why?
+
+To enable changing code without fear. I.e. To make maintenance more possible in the face of constant change.
+
+--
+
+### Types or Tests?
+
+Both if possible! (Though I do believe in "exploratory" coding.)
 
 ---
 
 # Homework
 
-* OO Hangman w/ Tests?
+* Coffee time!!!
+
  </textarea> <script src="https://gnab.github.io/remark/downloads/remark-latest.min.js"> </script> <script> var slideshow = remark.create(); </script> </body> </html>
