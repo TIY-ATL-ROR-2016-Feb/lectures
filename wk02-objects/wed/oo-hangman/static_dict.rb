@@ -5,7 +5,15 @@ WORDS = [
 ]
 
 class StaticDict
+  def initialize
+    @word = nil
+  end
+
   def get_word
-    WORDS.sample
+    word = WORDS.sample
+    until word != @word
+      word = WORDS.sample
+    end
+    @word = word
   end
 end

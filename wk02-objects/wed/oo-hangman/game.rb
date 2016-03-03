@@ -7,6 +7,10 @@ class Game
     @guesses = Set.new
   end
 
+  def guesses
+    @guesses
+  end
+
   def show_progress(answer, turn_count)
     sleep 1
     puts "The word is: #{"-" * answer.length}"
@@ -26,13 +30,17 @@ class Game
     self.win?(answer) || self.lose?(turn_count)
   end
 
+  def take_turn(answer, turn_count)
+    show_progress(answer, turn_count)
+    guess = @player.make_guess
+    @guesses.add(guess)
+  end
+
   def play
     answer = @dictionary.get_word
     turn_count = 7
     until game_over?(answer, turn_count)
-      show_progress(answer, turn_count)
-      guess = @player.make_guess
-      @guesses.add(guess)
+      take_turn(answer, turn_count)
       turn_count -= 1 unless answer.include?(guess)
     end
   end
