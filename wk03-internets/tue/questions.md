@@ -21,6 +21,17 @@ Github provides instructions on how to clone a repo [here][cloning].
 [cloning]: https://help.github.com/articles/fork-a-repo/#step-2-create-a-local-clone-of-your-fork
 [hw-repo]: https://github.com/TIY-ATL-ROR-2016-Feb/homework
 
+## Running It
+
+Now that we're using bundler and Gemfiles, and have a more complicated project
+structure, we can't just run `ruby my_file.rb` as we did previously because
+we will need to load other files that may not be in the same folder, or
+libraries that may exist elsewhere entirely.
+
+To run the project, prefix the usual command with `bundle exec` like so...
+`bundle exec ruby my_file.rb`. Bundler will then set up your `$LOAD_PATH`
+so that ruby can find the requisite files.
+
 ## Objectives
 
 ### Learning Objectives
