@@ -27,21 +27,6 @@ After completing this assignment, you be able to effectively use
 
 * A new git repo under your account called "codechamp"!
 
-To create this, navigate to your TIY projects folder and run
-`bundle gem codechamp`. Then `cd codechamp` to enter the directory
-and `git commit -m "Initial commit"` to make your first commit to
-the project (bundle gem will run `git init` for you).
-
-Finally, open the Gemfile and add `gem 'httparty'` and `gem 'pry'`
-and run `bundle` on the command line to ensure these gems are fetched.
-Use `git` to add and commit the changed files. Now you can start hacking!
-You'll probably want to add Github and App classes as we did in the
-homework application.
-
-At this point, you can start `Github` and `App` classes similar to what we
-did in our homework repo. To run your code as you go, just use the command:
-`bundle exec ruby lib/codechamp.rb`
-
 ### Requirements
 
 Running `bundle exec ruby lib/codechamp.rb` should:
@@ -61,6 +46,27 @@ Then maybe later try big repos like:
 `ruby/ruby`
 `seattlerb/minitest`
 `rails/rails`
+
+### Setup
+
+[bundler-notes]: https://github.com/TIY-ATL-ROR-2016-Feb/lectures/blob/master/wk03-internets/tue/notes.md#introducing-bundler-and-libraries-gems
+
+We'll want to start new ruby projects from here on out using
+bundler, similar to how I did it in [Tuesday's lecture][bundler-notes].
+To create this, navigate to your TIY projects folder and run
+`bundle gem codechamp`. Then `cd codechamp` to enter the directory
+and `git commit -m "Initial commit"` to make your first commit to
+the project (bundle gem will run `git init` for you).
+
+Finally, open the Gemfile and add `gem 'httparty'` and `gem 'pry'`
+and run `bundle` on the command line to ensure these gems are fetched.
+Use `git` to add and commit the changed files. Now you can start hacking!
+You'll probably want to add Github and App classes as we did in the
+homework application.
+
+At this point, you can start `Github` and `App` classes similar to what we
+did in our homework repo. To run your code as you go, just use the command:
+`bundle exec ruby lib/codechamp.rb`
 
 ### Authorization
 
