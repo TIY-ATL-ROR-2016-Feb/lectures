@@ -27,11 +27,26 @@ After completing this assignment, you be able to effectively use
 
 * A new git repo under your account called "codechamp"!
 
+To create this, navigate to your TIY projects folder and run
+`bundle gem codechamp`. Then `cd codechamp` to enter the directory
+and `git commit -m "Initial commit"` to make your first commit to
+the project (bundle gem will run `git init` for you).
+
+Finally, open the Gemfile and add `gem 'httparty'` and `gem 'pry'`
+and run `bundle` on the command line to ensure these gems are fetched.
+Use `git` to add and commit the changed files. Now you can start hacking!
+You'll probably want to add Github and App classes as we did in the
+homework application.
+
+At this point, you can start `Github` and `App` classes similar to what we
+did in our homework repo. To run your code as you go, just use the command:
+`bundle exec ruby lib/codechamp.rb`
+
 ### Requirements
 
 Running `bundle exec ruby lib/codechamp.rb` should:
 
-* Prompt the user for an auth token
+* Prompt the user for an auth token (see auth note)
 * Ask the user what org/repo to get data about from github
 * Print a table of contributions ranked in various ways
 * Ask the user if they'd like to fetch another or quit.
@@ -46,6 +61,13 @@ Then maybe later try big repos like:
 `ruby/ruby`
 `seattlerb/minitest`
 `rails/rails`
+
+### Authorization
+
+We'll still want to pass headers to Github to authorize our requests but,
+rather than storing the OAUTH_TOKEN as an environment variable on the
+command line, I'd suggest having the app prompt the user for their token
+and then passing it as an initialize argument to `Github.new`.
 
 ## Normal Mode
 
