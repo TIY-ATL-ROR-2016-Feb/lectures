@@ -1,5 +1,7 @@
 ## Welcome To Web Programming
 
+(Code from today's lecture is up at https://github.com/TIY-ATL-ROR-2016-Feb/jukeborx )
+
 ---
 
 ## Welcome To ~~Web Programming~~ HELL
