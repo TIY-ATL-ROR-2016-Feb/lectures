@@ -1,0 +1,129 @@
+<!doctype html> <html> <head> <title>Title</title> <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/> <style type="text/css"> @import url(https://fonts.googleapis.com/css?family=Yanone+Kaffeesatz); @import url(https://fonts.googleapis.com/css?family=Droid+Serif:400,700,400italic); @import url(https://fonts.googleapis.com/css?family=Ubuntu+Mono:400,700,400italic); body{font-family: 'Droid Serif';}h1, h2, h3{font-family: 'Yanone Kaffeesatz'; font-weight: 400; margin-bottom: 0;}.remark-slide-content h1{font-size: 3em;}.remark-slide-content h2{font-size: 2em;}.remark-slide-content h3{font-size: 1.6em;}.footnote{position: absolute; bottom: 3em;}li p{line-height: 1.25em;}.red{color: #fa0000;}.large{font-size: 2em;}a, a > code{color: rgb(249, 38, 114); text-decoration: none;}code{-moz-border-radius: 5px; -web-border-radius: 5px; background: #e7e8e2; border-radius: 5px;}.remark-code, .remark-inline-code{font-family: 'Ubuntu Mono';}.remark-code-line-highlighted{background-color: #373832;}.pull-left{float: left; width: 47%;}.pull-right{float: right; width: 47%;}.pull-right ~ p{clear: both;}#slideshow .slide .content code{font-size: 0.8em;}#slideshow .slide .content pre code{font-size: 0.9em; padding: 15px;}.inverse{background: #272822; color: #777872; text-shadow: 0 0 20px #333;}.inverse h1, .inverse h2{color: #f3f3f3; line-height: 0.8em;}#slide-inverse .footnote{bottom: 12px; left: 20px;}#slide-how .slides{font-size: 0.9em; position: absolute; top: 151px; right: 140px;}#slide-how .slides h3{margin-top: 0.2em;}#slide-how .slides .first, #slide-how .slides .second{padding: 1px 20px; height: 90px; width: 120px; -moz-box-shadow: 0 0 10px #777; -webkit-box-shadow: 0 0 10px #777; box-shadow: 0 0 10px #777;}#slide-how .slides .first{background: #fff; position: absolute; top: 20%; left: 20%; z-index: 1;}#slide-how .slides .second{position: relative; background: #fff; z-index: 0;}.left-column{color: #777; width: 20%; height: 92%; float: left;}.left-column h2:last-of-type, .left-column h3:last-child{color: #000;}.right-column{width: 75%; float: right; padding-top: 1em;} </style> </head> <body> <textarea id="source"> ## Welcome To Web Programming
+
+---
+
+## Welcome To ~~Web Programming~~ HELL
+
+--
+
+* Just kidding. But weren't you scared?
+
+* Y'all were like [so scared][scurred].
+
+--
+
+* You know I'd [never let you down][nlyd].
+
+[scurred]: http://i.imgur.com/AJuPuJj.gifv
+[nlyd]: http://i.imgur.com/9DlpKA1.gifv
+
+---
+
+## Let's Build a Jukebox (kinda)
+
+### Problems
+
+A couple of tricks we need ...
+
+1. The ability to answer web requests.
+2. The ability to trigger audio playback.
+3. The ability to search audio files.
+
+--
+
+### Solutions!
+
+1. Solved by `Sinatra`.
+2. Solved by `Ruby`! (Using shell commands like "afplay").
+3. Solved by `mp3info` aaaaand ... a bit of PORO [pre-written code][pwc].
+
+---
+
+## Getting Started
+
+* `bundle gem jukeberx` and add `sinatra` to the Gemfile and `bundle`!
+* Aaaand slap my [pre-written code][pwc] right in the lib directory WOOO!
+
+--
+
+### Why Pre-Written Code?1?
+
+1. I didn't want to spend the whole class building it.
+2. We can still talk about it for a minute!
+3. Well, for one, it's just stupid "glue code".
+4. It's worth talking through the difference between `spawn` and `system`.
+5. It's also worth spending a minute looking at our first exception.
+
+[pwc]: https://gist.github.com/kingcons/2cfb9a1ca02f7a3c9854
+
+---
+
+## My First Controller! Wheeeee
+
+* `bundle show sinatra` shows us where the code is!
+  * Sinatra looks just like our projects. lib folder, there's some stuff in there.
+  * And it's only 2000 lines of code! Which is kind of awesome, because we could read it.
+
+--
+
+* A server is just a thing that listens for requests.
+* A controller is a set of methods that answer specific requests.
+* The application router determines which controller/method go with which request.
+
+---
+
+## My First Controller, part deux
+
+* Ultimately, it is the controller's job to receive a request,
+  do any work needed talking to the database or *whatever*,
+  and build a response to send back as HTML or JSON.
+
+--
+
+We got a request on the [port][ports] and everything!
+
+--
+
+* Note that until I set `RACK_ENV=production` when running
+  `bundle exec ruby lib/jukeberx.rb` other users cannot connect to the server.
+  It only runs on localhost.
+
+[ports]: http://en.wikipedia.org/wiki/List_of_TCP_and_UDP_port_numbers
+
+---
+
+## Sinatra and Miscellany
+
+Sinatra is a bit weird:
+
+* It makes some hard things (like routing web requests)
+  easy but there's some magic so it takes some getting used to.
+
+* That said, it's very easy to define a route, just write:
+  `get '/hi' do ... end` to define a simple static route.
+
+  To build a route that responds to multiple URLs, just write:
+  `get '/hello/:name' do ... end` and whatever URL matches this
+  pattern will go to the route. Inside the route's block,
+  the variable `params` will be a hash that contains the parameters
+  from the user.
+
+  Query params sent to that route will be automatically added to `params`.
+
+* As long as the thing we return from a route is some kind of string
+  (like HTML or JSON) everything works just fine.
+
+---
+
+## Extra Resources
+
+Interesting Sinatra reading I've dug up other than the docs is as follows:
+
+* This [blog entry][sinatra_apps] on structuring sinatra apps and
+  this [Sinatra app code][monocle] by it's author.
+* This [article][mod_v_classic] from the Sinatra site on Modular vs Classic style.
+
+[sinatra_apps]: http://blog.sourcing.io/structuring-sinatra
+[monocle]: https://github.com/maccman/monocle
+[mod_v_classic]: http://www.sinatrarb.com/intro.html#Modular%20vs%20Classic%20Style
+ </textarea> <script src="https://gnab.github.io/remark/downloads/remark-latest.min.js"> </script> <script> var slideshow = remark.create(); </script> </body> </html>
