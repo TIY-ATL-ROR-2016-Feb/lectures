@@ -2,6 +2,11 @@
 
 It's [not a good look](https://www.youtube.com/watch?v=9iC45-tMR34)
 
+--
+
+I hope by the end of today we're all more like this:
+
+<img src="http://i.imgur.com/7ZNBz5l.gifv" width="80%">
 
 ---
 
@@ -168,6 +173,8 @@ And at least we are all screwed together.
 - Each property declaration ends with a semicolon
 - The list of property declarations goes between curly braces (i.e. `{ }`)
 
+---
+
 #### Example
 
 ```css
@@ -179,6 +186,8 @@ div > a // selector
 }
 ```
 
+---
+
 ## Box Model
 
 Every element on the page is a box. Every box can be styled with a border, background, etc. There are 4 parts to the box:
@@ -189,6 +198,10 @@ Every element on the page is a box. Every box can be styled with a border, backg
 * Margin
 
 By default when you set the `width` of an element, you are specifing the width of the content portion of the box only. Any padding, border, and margin will be added to the width. For example, if you had a div with the styles:
+
+---
+
+### Box Model 2.0
 
 ```css
 {
@@ -207,6 +220,8 @@ The full width of the entire box would be `122px` because it has the border and 
 0 + 1 + 10 + 100 + 10 + 1 + 0 = 122
 
 
+---
+
 #### Box Sizing
 
 You can change the way __width__ works on boxes using the `box-sizing` css property. The default value for this is `content-box` which works as described above where the width property only applies to the content of the box. The other possible values are:
@@ -214,6 +229,7 @@ You can change the way __width__ works on boxes using the `box-sizing` css prope
 * `padding-box` the __width__ property is applied to the content plus the padding
 * `border-box` the __width__ property is applied to the content, padding and border
 
+---
 
 ## Positioning
 
@@ -233,6 +249,7 @@ Introduction of `top`, `right`, `bottom`, `left` and `z-index`
 [Clearfix Hack](http://learnlayout.com/clearfix.html)
 [Floating boxes](http://s.codepen.io/jisaacks/debug/myOpLJ)
 
+---
 
 ## Links / Resources
 
@@ -246,4 +263,9 @@ Introduction of `top`, `right`, `bottom`, `left` and `z-index`
 * [Inline Level Elements](https://developer.mozilla.org/en-US/docs/Web/HTML/Inline_elemente)
 * [CSS Reference](https://developer.mozilla.org/en-US/docs/Web/CSS/Reference)
 * [CSS Z-INDEX](https://developer.mozilla.org/en-US/docs/Web/Guide/CSS/Understanding_z_index/The_stacking_context)
+
+Of particular note from my perspective are these, which are more about
+general concepts and a bit less "reference-style":
+
 * [Learn Layout](http://learnlayout.com/)
+* [The A-ha Moment](https://css-tricks.com/the-css-ah-ha-moment/)
