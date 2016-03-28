@@ -1,0 +1,131 @@
+<!doctype html> <html> <head> <title>Title</title> <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/> <style type="text/css"> @import url(https://fonts.googleapis.com/css?family=Yanone+Kaffeesatz); @import url(https://fonts.googleapis.com/css?family=Droid+Serif:400,700,400italic); @import url(https://fonts.googleapis.com/css?family=Ubuntu+Mono:400,700,400italic); body{font-family: 'Droid Serif';}h1, h2, h3{font-family: 'Yanone Kaffeesatz'; font-weight: 400; margin-bottom: 0;}.remark-slide-content h1{font-size: 3em;}.remark-slide-content h2{font-size: 2em;}.remark-slide-content h3{font-size: 1.6em;}.footnote{position: absolute; bottom: 3em;}li p{line-height: 1.25em;}.red{color: #fa0000;}.large{font-size: 2em;}a, a > code{color: rgb(249, 38, 114); text-decoration: none;}code{-moz-border-radius: 5px; -web-border-radius: 5px; background: #e7e8e2; border-radius: 5px;}.remark-code, .remark-inline-code{font-family: 'Ubuntu Mono';}.remark-code-line-highlighted{background-color: #373832;}.pull-left{float: left; width: 47%;}.pull-right{float: right; width: 47%;}.pull-right ~ p{clear: both;}#slideshow .slide .content code{font-size: 0.8em;}#slideshow .slide .content pre code{font-size: 0.9em; padding: 15px;}.inverse{background: #272822; color: #777872; text-shadow: 0 0 20px #333;}.inverse h1, .inverse h2{color: #f3f3f3; line-height: 0.8em;}#slide-inverse .footnote{bottom: 12px; left: 20px;}#slide-how .slides{font-size: 0.9em; position: absolute; top: 151px; right: 140px;}#slide-how .slides h3{margin-top: 0.2em;}#slide-how .slides .first, #slide-how .slides .second{padding: 1px 20px; height: 90px; width: 120px; -moz-box-shadow: 0 0 10px #777; -webkit-box-shadow: 0 0 10px #777; box-shadow: 0 0 10px #777;}#slide-how .slides .first{background: #fff; position: absolute; top: 20%; left: 20%; z-index: 1;}#slide-how .slides .second{position: relative; background: #fff; z-index: 0;}.left-column{color: #777; width: 20%; height: 92%; float: left;}.left-column h2:last-of-type, .left-column h3:last-child{color: #000;}.right-column{width: 75%; float: right; padding-top: 1em;} </style> </head> <body> <textarea id="source"> # Welcome Back
+
+--
+
+* From twitter:
+
+<blockquote class="twitter-tweet" lang="en"><p lang="en" dir="ltr">I&#39;ve got 99 problems and CSS has pushed about 93 of them off the bottom of my screen.</p>&mdash; mhoye <a href="https://twitter.com/mhoye/status/606523811501109251">(@mhoye)</a></blockquote>
+
+--
+
+![css](http://www.latostadora.com/generados/tiendas/11070/dibujos/279390.jpg)
+
+---
+
+# It's That Time Again ...
+* Cool. Now then. [QUIZ TIME][quiz]!!!
+
+[quiz]: https://gist.github.com/kingcons/806abf544302ee455481 
+
+---
+
+# Let's Build a Blog with Rails!
+
+* `gem install rails` && `rbenv rehash`
+* `rails new blarg`
+* `rails g`, `rails c`, `rails s`
+* `rake routes`
+
+---
+
+# Files go in specific places:
+
+* Models go in `app/models/model_name.rb`
+* Controllers go in `app/controllers/controller_name.rb`
+* Views go in `app/views/controller_name_prefix/controller_method.rb`
+
+Deep breath, this will become intuitive. Example time!
+
+---
+
+# Okay, now Blarg
+
+1. `rails new blarg`
+
+--
+
+2. `rails g model Tag name:string`
+
+--
+
+3. `rails g model PostTag post_id:integer tag_id:integer`
+
+--
+
+4. `rails g model Post title:string date:datetime content:text`
+
+--
+
+5. Write a quick importer for some blog posts?
+   Or better yet, just drop the database right into our project!
+
+--
+
+6. Add Posts controller and display method and view.
+
+   Add index route and root to it.
+
+## BREAK TIME!
+
+---
+
+# Ah, CRUD
+
+* Create, Read, Update, Delete
+
+--
+
+7. Add a way to view, create, and delete posts via the web interface.
+
+--
+
+   * There will be a surpise in how this is structured at the routing level.
+
+--
+
+   * We should probably talk about `rake routes` and path helpers for a minute.
+
+--
+
+   * And uh ... probably "virtual attributes" too. :)
+
+--
+
+8. Now let's think about [validations][validations] for a minute...
+
+--
+
+9. Add comments.
+
+--
+
+10. Maybe do some styling with bootstrap?
+
+[validations]: http://guides.rubyonrails.org/active_record_validations.html
+
+---
+
+# Homework
+
+* Read selected portions of the Rails routing guide!
+* Port the weekend app from Sinatra to Rails!
+  * (I.e. do `rails new etsyrails`, add a route and controller, copy over the views)
+* Go over the review document?
+
+---
+
+## BONUS
+
+Time for the [Bootstrap][bootstrap] CSS Framework!
+
+   * THIS IS WHY WE DON'T CSS! (Alternately, you may have dedicated front enders.)
+   * [Foundation][foundation] and [Materialize][materialize] are also options.
+   * Add `bootstrap-sass` gem.
+   * `@import bootstrap-sprockets` and `@import bootstrap` in our `application.css.sass`
+   * Maybe steal some stuff from [here][tealeaf].
+
+[tealeaf]: http://www.gotealeaf.com/blog/integrating-rails-and-bootstrap-part-2
+[bootstrap]: http://getbootstrap.com/css/
+[foundation]: http://foundation.zurb.com/
+[materialize]: http://materializecss.com/
+ </textarea> <script src="https://gnab.github.io/remark/downloads/remark-latest.min.js"> </script> <script> var slideshow = remark.create(); </script> </body> </html>
