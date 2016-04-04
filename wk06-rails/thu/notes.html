@@ -1,0 +1,95 @@
+<!doctype html> <html> <head> <title>Title</title> <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/> <style type="text/css"> @import url(https://fonts.googleapis.com/css?family=Yanone+Kaffeesatz); @import url(https://fonts.googleapis.com/css?family=Droid+Serif:400,700,400italic); @import url(https://fonts.googleapis.com/css?family=Ubuntu+Mono:400,700,400italic); body{font-family: 'Droid Serif';}h1, h2, h3{font-family: 'Yanone Kaffeesatz'; font-weight: 400; margin-bottom: 0;}.remark-slide-content h1{font-size: 3em;}.remark-slide-content h2{font-size: 2em;}.remark-slide-content h3{font-size: 1.6em;}.footnote{position: absolute; bottom: 3em;}li p{line-height: 1.25em;}.red{color: #fa0000;}.large{font-size: 2em;}a, a > code{color: rgb(249, 38, 114); text-decoration: none;}code{-moz-border-radius: 5px; -web-border-radius: 5px; background: #e7e8e2; border-radius: 5px;}.remark-code, .remark-inline-code{font-family: 'Ubuntu Mono';}.remark-code-line-highlighted{background-color: #373832;}.pull-left{float: left; width: 47%;}.pull-right{float: right; width: 47%;}.pull-right ~ p{clear: both;}#slideshow .slide .content code{font-size: 0.8em;}#slideshow .slide .content pre code{font-size: 0.9em; padding: 15px;}.inverse{background: #272822; color: #777872; text-shadow: 0 0 20px #333;}.inverse h1, .inverse h2{color: #f3f3f3; line-height: 0.8em;}#slide-inverse .footnote{bottom: 12px; left: 20px;}#slide-how .slides{font-size: 0.9em; position: absolute; top: 151px; right: 140px;}#slide-how .slides h3{margin-top: 0.2em;}#slide-how .slides .first, #slide-how .slides .second{padding: 1px 20px; height: 90px; width: 120px; -moz-box-shadow: 0 0 10px #777; -webkit-box-shadow: 0 0 10px #777; box-shadow: 0 0 10px #777;}#slide-how .slides .first{background: #fff; position: absolute; top: 20%; left: 20%; z-index: 1;}#slide-how .slides .second{position: relative; background: #fff; z-index: 0;}.left-column{color: #777; width: 20%; height: 92%; float: left;}.left-column h2:last-of-type, .left-column h3:last-child{color: #000;}.right-column{width: 75%; float: right; padding-top: 1em;} </style> </head> <body> <textarea id="source"> ## Enter Authentication
+
+--
+
+<img src="http://i.imgur.com/LM7RWkx.jpg" width="80%">
+
+---
+
+## Today's Agenda
+
+--
+
+0. Home Depot Recap
+
+1. Morning Warmup with a Posts-Tagged-By route/method
+
+2. Basic User model and Auth intro
+
+3. Layouts, Flash, Sessions, Before Actions!
+
+4. Better password management
+
+---
+
+## Step by Step(ish)
+
+0. Any questions from Home Depot site visit?
+
+--
+
+  * Two big notes: Biggest thing they're looking for is acknowledgement that you're
+    never done learning and a desire to continue learning more. Beyond that, testing
+    and thinking about interfaces between different *modules* or software systems
+    with their own *responsibilities* is clearly quite important. :+1:
+    
+--
+    
+    tl,dr: Continuing education is nonstop in programming. On some level,
+    *none of us* will ever be good enough at this and that is *Okay*. In some ways,
+    it's even fun. But always find new tools and knowledge you want and go get it.
+    Fuck anyone that says you can't.
+    
+--
+    
+  * I don't think I've assigned "Institutional Memory and Reverse Smuggling" yet.
+    * One of my favorite articles though describes an environment very different
+      than Home Depot.
+
+---
+
+## Step by Step(ish)
+
+1. Warmup! Add a route for viewing all posts with a certain tag
+  * Link to that with the tags in post show view
+
+2. Add a User model! Name, Email, Password, maybe some simple validations.
+  * Add a unique index on email! (What are indexes for?)
+
+3. We all know what a login page looks like. From the server's point of view,
+   what problem does user login "solve"?
+  * One of the best ways to understand our tools (activerecord, httparty, classes, etc) is to ask *what problem does this solve*?
+  
+4. Add registrations and sessions controllers. Use `@foo.errors` in the form!
+  * Talk about `session[:foo]`.
+
+---
+
+## Step by Step(ish)
+  
+5. The two most common things the server will want to do are figure out
+   who is making the current request and making sure a user is logged in
+   to be able to view certain pages. Let's add methods to help with that!
+  * Talk about `before_action`!
+   
+6. Add links to the layout for Login/Logout and Signup. Also mention the `flash`!
+
+7. Make posts belong to a user, update how they're created in PostsController.
+  * Modify a few methods based on user authentication? Flash messages?
+
+8. Our password storage practices are bogus. Let's do a little better with `bcrypt`!
+  * (and [`has_secure_password`][hsp])
+
+[hsp]: http://api.rubyonrails.org/classes/ActiveModel/SecurePassword/ClassMethods.html
+
+---
+
+### What Time Is It?
+
+[Deploy to Heroku][heroku] if there's time!
+
+[heroku]: https://devcenter.heroku.com/articles/getting-started-with-rails4
+
+---
+
+ </textarea> <script src="https://gnab.github.io/remark/downloads/remark-latest.min.js"> </script> <script> var slideshow = remark.create(); </script> </body> </html>
