@@ -1,0 +1,171 @@
+<!doctype html> <html> <head> <title>Title</title> <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/> <style type="text/css"> @import url(https://fonts.googleapis.com/css?family=Yanone+Kaffeesatz); @import url(https://fonts.googleapis.com/css?family=Droid+Serif:400,700,400italic); @import url(https://fonts.googleapis.com/css?family=Ubuntu+Mono:400,700,400italic); body{font-family: 'Droid Serif';}h1, h2, h3{font-family: 'Yanone Kaffeesatz'; font-weight: 400; margin-bottom: 0;}.remark-slide-content h1{font-size: 3em;}.remark-slide-content h2{font-size: 2em;}.remark-slide-content h3{font-size: 1.6em;}.footnote{position: absolute; bottom: 3em;}li p{line-height: 1.25em;}.red{color: #fa0000;}.large{font-size: 2em;}a, a > code{color: rgb(249, 38, 114); text-decoration: none;}code{-moz-border-radius: 5px; -web-border-radius: 5px; background: #e7e8e2; border-radius: 5px;}.remark-code, .remark-inline-code{font-family: 'Ubuntu Mono';}.remark-code-line-highlighted{background-color: #373832;}.pull-left{float: left; width: 47%;}.pull-right{float: right; width: 47%;}.pull-right ~ p{clear: both;}#slideshow .slide .content code{font-size: 0.8em;}#slideshow .slide .content pre code{font-size: 0.9em; padding: 15px;}.inverse{background: #272822; color: #777872; text-shadow: 0 0 20px #333;}.inverse h1, .inverse h2{color: #f3f3f3; line-height: 0.8em;}#slide-inverse .footnote{bottom: 12px; left: 20px;}#slide-how .slides{font-size: 0.9em; position: absolute; top: 151px; right: 140px;}#slide-how .slides h3{margin-top: 0.2em;}#slide-how .slides .first, #slide-how .slides .second{padding: 1px 20px; height: 90px; width: 120px; -moz-box-shadow: 0 0 10px #777; -webkit-box-shadow: 0 0 10px #777; box-shadow: 0 0 10px #777;}#slide-how .slides .first{background: #fff; position: absolute; top: 20%; left: 20%; z-index: 1;}#slide-how .slides .second{position: relative; background: #fff; z-index: 0;}.left-column{color: #777; width: 20%; height: 92%; float: left;}.left-column h2:last-of-type, .left-column h3:last-child{color: #000;}.right-column{width: 75%; float: right; padding-top: 1em;} </style> </head> <body> <textarea id="source"> # So about yesterday ... 
+
+--
+
+![imgurapi](https://cdn.meme.am/instances/400x/25164820.jpg)
+
+---
+
+## Wrecked Lives from Core Extensions
+
+Then the Imgur gem [almost made me][bug] burn the building down.
+
+--
+
+![fire](http://redlinernotes.com/docs/set-it-on-fire.gif)
+
+[bug]: https://github.com/dncrht/imgur/issues/4#issuecomment-206506033
+
+---
+
+## Quick Reminder on File Storage
+
+We usually don't want to store files on our App servers.
+In fact, production services will have different servers
+dedicated to database work, file serving, and Web app serving.
+
+So where will we store our files?
+
+--
+
+We'll store them on S3! Three good reasons:
+
+1. S3 is faster than Rails at serving static assets (i.e. images, files).
+2. Heroku is "horizontally scalable". I.e. Just run more servers to
+   meet demand. But this means you can't store the files on the filesystem
+   because the other servers wouldn't be able to get to them. If you're worried
+   about sharing data via the database, it is actually hosted on another
+   machine in production anyway.
+3. It's really cheap and durable. :D
+
+---
+
+## A bit about S3
+
+S3 has a [Free Tier][free-s3]. So ... Good News.
+
+Sign up! Cancel it anytime you want.
+
+* You'll get an Access Key and Secret Key, like most APIs.
+* Files are stored in "buckets" and you can think of a bucket as a cross
+  between a ruby hash and a hard disk that's infinitely big.
+* Files can be privately or publicly visible.
+
+**Don't forget to create a bucket!**
+
+[free-s3]: https://aws.amazon.com/free/
+
+---
+
+## So file uploads then ...
+
+**tl;dr version**
+
+1. We need to sign up for an account with AWS.
+2. We need to create a bucket. Take note of what server it's on.
+  * (The bucket can be created in the AWS admin console or with the `aws-sdk` gem.)
+3. Add your AWS Access Key and Secret Key to a `.env` file. Don't forget to set
+   them on Heroku with `heroku config:set`!
+4. Put the `.env` file in `.gitignore` so you don't accidentally commit it!
+5. Add some gems (`aws-sdk < 2.0`, `dotenv in dev, test`, `paperclip`) ...
+6. Add an [initializer for paperclip][init-paper]. Rails runs these when
+   we start the server to configure our gems.
+7. Add some paperclip fields to a model with `rails g paperclip your-model attachment-name`. Migrate!
+8. Add `has_attachment :attachment-name` to your model and a paperclip validation
+   for either content name or content type. Or else ...
+
+---
+
+## File Uploads Continued ...
+
+If you're curious about these details, you may want to read:
+  * This guide to [configurating Heroku on S3][heroku-s3]
+  * This blog post about [what happens if the hostname isn't set][tears]
+  * This stackoverflow answer about [why new versions of aws-sdk don't work][idiots]
+  * This stackoverflow answer about [what happens without paperclip validations][fuck]
+
+--
+
+Or you could dig up footage on the internet of me crying. I'm sure it's out there.
+
+--
+
+Sidenote: I *had to* read all of these (and more) last night, after I got home
+at 9, testing out various things just trying to find the *simplest* way to do this.
+I tried another gem before paperclip, carrierwave, that ... well, let's not even
+go into it. Long story short, experimentation and digging are a big part of life
+as a developer.
+
+[heroku-s3]: https://devcenter.heroku.com/articles/paperclip-s3
+[idiots]: http://stackoverflow.com/a/28376678 
+[fuck]: http://stackoverflow.com/a/21898204
+[tears]: http://blog.paulrugelhiatt.com/rails/paperclip/s3/2014/11/15/paperclip-and-s3-PermanentRedirect-the-bucket-you-are-attempting-to-access.html
+
+[init-paper]: https://gist.github.com/kingcons/ed703c4d07dc5d6acc61cfa805c76eb5 
+
+---
+
+## Introducing Jbuilder
+
+For very simple responses, we've seen that you can just write
+`render json: { foo: @bar }, status: :whatever` and sometimes
+that is the best approach!
+
+But often you'll want to construct JSON more carefully or build
+larger responses. When that happens, you don't want to use `render json: ...`
+It sort of becomes like writing a *view* in your controller, mixing logic
+about the **presentation** of data versus **management** of data.
+
+As the response gets more complicated, you should use a [JBuilder][jbuilder] view!
+This article is a decent reference: [how to jbuilder][how-to-jbuilder].
+
+[jbuilder]: https://github.com/rails/jbuilder
+[how-to-jbuilder]: http://www.multunus.com/blog/2014/03/using-jbuilder-instead-erb-rendering-json-response/
+
+---
+
+## Remember your status codes!
+
+**Note:** `render` takes a `status: :status_name`
+option that recognizes the following [codes][status-codes].
+In RESTful API design, we try very hard to send back an
+appropriate status code so the developers making requests know
+what happened on the server.
+
+Popular codes:
+
+* 200 - OK, that went well
+* 201 - Created, cool we made that for you
+* 202 - Accepted, we did what you asked us to (often used with PUT/updates)
+* 204 - No Content (may be appropriate after DELETE-ing)
+* 401 - Unauthenticated, you better login
+* 403 - Unauthorized, you don't have permission to do that
+* 404 - Page Not Found, sorry this object doesn't exist
+* 422 - Unprocessable Entity, your data is garbage buddy
+
+[status-codes]: http://apidock.com/rails/ActionController/Base/render#254-List-of-status-codes-and-their-symbols
+
+---
+
+## Let's Talk about Workflow with Other Teams
+
+* You're responsible for data. You need to document your APIs!
+  Have a README that lists your routes, what they do, what data
+  they return, and any expected parameters.
+
+* It's important to let the other teams have an idea of what
+  data you'll provide soon so they can start working.
+  They can mock up test data if they know something about
+  what your requests and responses look like. You may want
+  to write the docs *first* and then write the rails code!
+
+* There is also room for discussion about what part of the "work"
+  (I.e. computation) is done on the frontend vs backend. Think about
+  what each other's responsibilities are!
+  
+* Keep in mind the best way to debug the API if someone says "it doesn't work"
+  is often to use `heroku logs --tail` and get them to try their request again.
+  Watch the logs and see if it causes an error!
+  
+  (And feel free to ask your instructors questions!)
+ </textarea> <script src="https://gnab.github.io/remark/downloads/remark-latest.min.js"> </script> <script> var slideshow = remark.create(); </script> </body> </html>
