@@ -21,7 +21,17 @@ understand, and how much you can do working with a team.
 
 #### Any high-level takeaways or thoughts y'all had about the project?
 
+This afternoon we'll meet in the back at 3pm for demos.
+Each group will have 5 minutes to show what they built.
+You won't be presenting the code but the finished product.
+
 --
+
+If there are unfinished parts of the game, that's fine.
+Feel free to talk about what your next steps would be,
+interesting insights you had, or challenges you faced.
+
+---
 
 ## What's Next?
 
@@ -225,4 +235,8 @@ Let's set up some continuous integration for free (on public projects) with Trav
 
 * Group project presentations in the back at 3pm.
 
-* Add a Travis CI badge to your fuhgeddit projects and at least two tests for each model.
+* Add a [Travis CI][travis-ci] badge to your fuhgeddit projects and at least
+  two [tests][tests] for each model.
+
+[travis-ci]: https://travis-ci.org/
+[tests]: guides.rubyonrails.org/testing.html
