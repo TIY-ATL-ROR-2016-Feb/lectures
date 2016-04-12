@@ -1,0 +1,305 @@
+<!doctype html> <html> <head> <title>Title</title> <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/> <style type="text/css"> @import url(https://fonts.googleapis.com/css?family=Yanone+Kaffeesatz); @import url(https://fonts.googleapis.com/css?family=Droid+Serif:400,700,400italic); @import url(https://fonts.googleapis.com/css?family=Ubuntu+Mono:400,700,400italic); body{font-family: 'Droid Serif';}h1, h2, h3{font-family: 'Yanone Kaffeesatz'; font-weight: 400; margin-bottom: 0;}.remark-slide-content h1{font-size: 3em;}.remark-slide-content h2{font-size: 2em;}.remark-slide-content h3{font-size: 1.6em;}.footnote{position: absolute; bottom: 3em;}li p{line-height: 1.25em;}.red{color: #fa0000;}.large{font-size: 2em;}a, a > code{color: rgb(249, 38, 114); text-decoration: none;}code{-moz-border-radius: 5px; -web-border-radius: 5px; background: #e7e8e2; border-radius: 5px;}.remark-code, .remark-inline-code{font-family: 'Ubuntu Mono';}.remark-code-line-highlighted{background-color: #373832;}.pull-left{float: left; width: 47%;}.pull-right{float: right; width: 47%;}.pull-right ~ p{clear: both;}#slideshow .slide .content code{font-size: 0.8em;}#slideshow .slide .content pre code{font-size: 0.9em; padding: 15px;}.inverse{background: #272822; color: #777872; text-shadow: 0 0 20px #333;}.inverse h1, .inverse h2{color: #f3f3f3; line-height: 0.8em;}#slide-inverse .footnote{bottom: 12px; left: 20px;}#slide-how .slides{font-size: 0.9em; position: absolute; top: 151px; right: 140px;}#slide-how .slides h3{margin-top: 0.2em;}#slide-how .slides .first, #slide-how .slides .second{padding: 1px 20px; height: 90px; width: 120px; -moz-box-shadow: 0 0 10px #777; -webkit-box-shadow: 0 0 10px #777; box-shadow: 0 0 10px #777;}#slide-how .slides .first{background: #fff; position: absolute; top: 20%; left: 20%; z-index: 1;}#slide-how .slides .second{position: relative; background: #fff; z-index: 0;}.left-column{color: #777; width: 20%; height: 92%; float: left;}.left-column h2:last-of-type, .left-column h3:last-child{color: #000;}.right-column{width: 75%; float: right; padding-top: 1em;} </style> </head> <body> <textarea id="source"> ## Good Morning
+
+![Good Morning](http://i.imgur.com/2Hnwn3eg.jpg)
+
+---
+
+## We're Learning Crazy Amounts
+
+![Another Wonderful Journey](http://i.imgur.com/ZvwZAYWg.jpg)
+
+Yesterday reminded me of [this](https://twitter.com/yminsky/status/662778190755192832)
+
+---
+
+## Today's Agenda
+
+Meeting from 12:30-1:30
+
+Need about an hour to prep some ActionCable/WebSockets stuff with JD
+
+--
+
+Topics:
+
+* Mass Assignment and Strong Params
+  * (We'll start by refactoring our users controller a teensy bit.)
+* Testing Associations with Fixtures
+  * We'll hit this while adding posts (and maybe comments) to markit.
+
+--
+
+After the 11 o'clock break:
+
+* The Asset Pipeline
+  * What Rails does to get CSS and Javascript on the page
+* Styling with Materialize
+  * OMG
+
+---
+
+## Mass Assignment ...
+
+It turns out that when doing `Model.new` or `Model.create`,
+we don't have to list out each column `Model.new(foo: bar, etc)`.
+We can actually just pass in a hash where the keys are attributes
+on the model and the values are what we want to set them to.
+E.g. `Model.new(params_hash)`
+
+--
+
+This is called Mass Assignment. It's very convenient *if* the parameters
+you receive in the controller have the same names as the database columns
+you want to store them in.
+
+--
+
+Unfortunately, just taking all the params and shoving them right into the
+database without asking questions isn't very secure. Say if you had an
+`admin` boolean column on your user model and did this in the `edit` method...
+
+---
+
+## Leads to Strong Params
+
+Then anybody could make themselves a site-level admin if they sent the right
+params to the controller. Something like this [happened to Github][github-sec]
+a few years back, which prompted the Rails core team to say "Hmm, if really
+talented programmers are still messing this up, we should make it harder
+to mess up." Enter strong params.
+
+--
+
+Rails will now *error* if you try to pass in the params directly to `Foo.new`
+or `Foo.create`. However, there is a straightforward way to specify what params
+your controller will accept and then retrieve them. For example, you could define
+a method in your controller like...
+
+--
+
+```
+def user_params
+  params.require(:user).permit(:email, :full_name, :password)
+end
+```
+... and then in your controller's create and update methods
+you can simply write
+
+```
+@user = User.new(user_params)
+or
+@user.update(user_params)
+```
+
+[github-sec]: https://github.com/blog/1068-public-key-security-vulnerability-and-mitigation
+
+---
+
+## Moar Tests!
+
+Let's write some tests for posts. But first a quick thought.
+
+It might seem like we didn't get a ton of code written yesterday.
+Or like testing "slowed us down". But consider the following:
+
+--
+
+* It's very unlikely we will break the code by accident
+
+--
+
+* Someone new to the project can start making changes quickly
+
+--
+
+* It was easy to refactor the controller to use strong params and check it
+
+--
+
+* I never tested anything by hand with Postman or the Browser yesterday...
+  * But I bet if we did, it would "just work"
+
+--
+
+The value in tests is cumulative, or maybe it's like compound interest,
+the point is the bigger your project gets, the more valuable they are.
+And while they may slow you down a little in the earliest stages, they
+more than pull their weight once you're further down the line.
+
+---
+
+## The Asset Pipeline
+
+A Rails feature that's been behind the scenes *this whole time*.
+The [Asset Pipeline][assets] is in charge of CSS and JS files
+used in our Rails projects. Not relevant to APIs but important for
+sites where we build the views!
+
+[assets]: http://guides.rubyonrails.org/asset_pipeline.html
+
+--
+
+When developing locally, we're mostly interested in the asset pipeline to get
+JS and CSS files loaded in the `<head>` of our views.
+
+The Asset Pipeline decides what js and css to include via ["manifests"](manifests).
+For an example, we can look at `app/assets/javascripts/application.js`
+
+--
+
+There are some fancier things the asset pipeline does that we should just briefly touch on ...
+
+---
+
+### Asset Pipeline - High-Level Goals
+
+* Concatenate assets - i.e. Put files together so pages load faster
+  * A request for 1 big file is faster than 10 requests for little files
+
+* Minify/Uglify assets - Compress or shrink the size of files by any available means.
+  * CSS can get whitespace and indentation ripped out.
+  * JS can take out whitespace, one letter variable names, many other tricks.
+
+---
+
+### Asset Pipeline - More High-Level Goals
+
+* All assets are "fingerprinted" for caching.
+  * Asset pipeline generates copies in `public/assets` when Rails starts.
+    * (Only when `RAILS_ENV=production` or we run `rake assets:precompile`)
+  * All files are named with a hash (unique ID) generated from the file contents.
+    * This way browsers/routers can cache the file but as soon as the contents
+      change, Rails serves a version with diff name, invalidating the cache.
+
+--
+
+And if you think this is mildly insane for a simple website, oh do I have some
+blog articles for you! (Especially [this one][packaging-dystopia].)
+
+Turns out even building and deploying software is messy as hell these days.
+Ask front end folks how they feel about build tools. Go on. Just ask.
+
+[manifests]: http://guides.rubyonrails.org/asset_pipeline.html#manifest-files-and-directives
+[packaging-dystopia]: dustycloud.org/blog/javascript-packaging-dystopia/
+
+---
+
+## Why The Trouble?
+
+Because it lets us use nice javascript libraries and (today) CSS Frameworks!
+
+[Bootstrap](https://getbootstrap.com) was all the rage for a time but there
+are so many sites out there using Bootstrap now, you won't stand out a lick.
+We'll use Materialize to be a little different. There are plenty of good
+Rails+Bootstrap tutorials anyhow. Remember, maximum control and the best
+odds of standing out come from doing some styling work of your own.
+
+For example, a good graduate portfolio looks [like this][rickard-rocks].
+
+--
+
+Think Rickard had a hard time getting hired? ... Right.
+He also did very well in the class, had awesome projects, etc.
+But a good portfolio site certainly will get more calls back.
+
+[rickard-rocks]: http://sunrick.github.io/
+
+---
+
+## Materialize & Rails
+
+Google published some Material Design guidelines a year or two back.
+Then they released a [CSS framework][materialize] that makes it relatively
+easy for your site to follow the guidelines.
+
+[materialize]: http://materializecss.com/
+
+--
+
+Bootstrap and Materialize involve JS for some of their nice UI components
+to work though and integrating them with the Asset Pipeline can involve
+some [complicated trickery][material-rails].
+
+--
+
+Thankfully, there are gems for adding them to a Rails project in a more
+straightforward way. So *here we go*!
+
+[material-rails]: http://blog.silvabox.com/materialize-on-rails-4-with-bower-and-heroku/
+
+---
+
+## Make It Go Plz
+
+tl;dr
+
+1. Add `materialize-sass` to the gemfile.
+2. Replace Rails default stylesheet `app/assets/stylesheets/application.css`
+   with a materialize SASS/scss file `app/assets/stylesheets/application.scss`
+   containing the line `@import "materialize";`.
+   You may optionally tweak the colors as shown in their docs.
+3. Add the Materialize JS code to your Rails JS manifest in `app/assets/javascripts/application.js` like so: `//= require materialize-sprockets`.
+
+You can now use all the magic in materialize!
+
+--
+
+For example ...
+
+---
+
+## Materialize Improvements
+
+We can now use CSS classes as shown in the examples on Materialize
+to easily achieve a ton of different effects on our site.
+
+See especially:
+* [Easy grids][grids]
+* [CSS helpers][helpers]
+* [Navbars][navbars]
+* [Icons][icons]
+
+Javascript powered bits like:
+* [Collapsibles][collapsibles]
+* [Mediaboxes][mediaboxes]
+* [Tabs][tabs]
+
+And hella other useful components.
+
+[grids]: http://materializecss.com/grid.html
+[helpers]: http://materializecss.com/helpers.html
+[navbars]: http://materializecss.com/navbar.html
+[icons]: http://materializecss.com/icons.html
+[collapsibles]: http://materializecss.com/collapsible.html
+[mediaboxes]: http://materializecss.com/media.html
+[tabs]: http://materializecss.com/tabs.html
+
+---
+
+## Dat Application Layout Tho...
+
+All is for naught if we don't thoughtfully design an
+overall layout for our site though.
+
+--
+
+Y'all might need to help me out here but let's try
+to add a partial template for a navbar up top.
+We'll put it in `app/views/shared/_nav.html.erb`
+and call it in the application layout.
+
+I threw a rough sketch up [here][nav-sketch]...
+
+[nav-sketch]: https://gist.github.com/kingcons/3e7039393f5519cbfd27a794ee9157e5
+
+--
+
+Note that spending a little extra time customizing your
+[color palette][colors] on your site can make a big difference
+to how things pop. See also: [the showcase][showcase]
+
+[colors]: materializecss.com/color.html
+[showcase]: materializecss.com/showcase.html
+
+---
+ </textarea> <script src="https://gnab.github.io/remark/downloads/remark-latest.min.js"> </script> <script> var slideshow = remark.create(); </script> </body> </html>
