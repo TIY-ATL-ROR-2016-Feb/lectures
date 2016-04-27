@@ -1,0 +1,113 @@
+<!doctype html> <html> <head> <title>Title</title> <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/> <style type="text/css"> @import url(https://fonts.googleapis.com/css?family=Yanone+Kaffeesatz); @import url(https://fonts.googleapis.com/css?family=Droid+Serif:400,700,400italic); @import url(https://fonts.googleapis.com/css?family=Ubuntu+Mono:400,700,400italic); body{font-family: 'Droid Serif';}h1, h2, h3{font-family: 'Yanone Kaffeesatz'; font-weight: 400; margin-bottom: 0;}.remark-slide-content h1{font-size: 3em;}.remark-slide-content h2{font-size: 2em;}.remark-slide-content h3{font-size: 1.6em;}.footnote{position: absolute; bottom: 3em;}li p{line-height: 1.25em;}.red{color: #fa0000;}.large{font-size: 2em;}a, a > code{color: rgb(249, 38, 114); text-decoration: none;}code{-moz-border-radius: 5px; -web-border-radius: 5px; background: #e7e8e2; border-radius: 5px;}.remark-code, .remark-inline-code{font-family: 'Ubuntu Mono';}.remark-code-line-highlighted{background-color: #373832;}.pull-left{float: left; width: 47%;}.pull-right{float: right; width: 47%;}.pull-right ~ p{clear: both;}#slideshow .slide .content code{font-size: 0.8em;}#slideshow .slide .content pre code{font-size: 0.9em; padding: 15px;}.inverse{background: #272822; color: #777872; text-shadow: 0 0 20px #333;}.inverse h1, .inverse h2{color: #f3f3f3; line-height: 0.8em;}#slide-inverse .footnote{bottom: 12px; left: 20px;}#slide-how .slides{font-size: 0.9em; position: absolute; top: 151px; right: 140px;}#slide-how .slides h3{margin-top: 0.2em;}#slide-how .slides .first, #slide-how .slides .second{padding: 1px 20px; height: 90px; width: 120px; -moz-box-shadow: 0 0 10px #777; -webkit-box-shadow: 0 0 10px #777; box-shadow: 0 0 10px #777;}#slide-how .slides .first{background: #fff; position: absolute; top: 20%; left: 20%; z-index: 1;}#slide-how .slides .second{position: relative; background: #fff; z-index: 0;}.left-column{color: #777; width: 20%; height: 92%; float: left;}.left-column h2:last-of-type, .left-column h3:last-child{color: #000;}.right-column{width: 75%; float: right; padding-top: 1em;} </style> </head> <body> <textarea id="source"> ## Background Jobs ...
+
+Are a bit complicated, yes.
+
+--
+
+Remember that the point of background jobs is that they let us run potentially long computations outside of Rails.
+
+--
+
+Because ActiveJob was introduced rather recently (in Rails 4.2) it can be difficult to find good resources on background jobs.
+
+--
+
+Two best resources I've seen are [this article][engine-resque] and the Rails [Active Job guide][aj].
+
+[engine-resque]: https://blog.engineyard.com/2014/getting-started-with-active-job
+[aj]: http://edgeguides.rubyonrails.org/active_job_basics.html
+
+---
+
+## Background Requirements
+
+Background jobs require additional processes running on our computer besides Rails and the database.
+
+* Redis - A message queue to send requests for Jobs to be done
+* Resque - A job pool/manager
+
+--
+
+Add some gems: `resque`.
+
+--
+
+Add some routes: `mount Resque::Server.new, at: "jobs"`
+
+--
+
+May want to protect this. See [here](https://github.com/resque/resque/wiki/FAQ#how-do-you-protect-resque-web-with-devise).
+
+---
+
+## The Real Complications
+
+* When do the jobs run?
+
+--
+
+* How do I know if they failed?
+
+--
+
+* What is loaded when the jobs run?
+
+---
+
+## Background Jobs (Setup)
+
+You'll need to `brew install redis` if you haven't.
+
+--
+
+You'll need to configure Resque to find Redis and the Database.
+
+--
+
+More setup may be required if you want to be able to schedule jobs in the future or recurring times.
+
+--
+
+I have experience with the [clockwork] gem and liked it. [resque-scheduler] is also a thing.
+
+--
+
+Remember to add entries to your `procfile`! At least:
+
+* `redis: redis-server`
+* `resque: QUEUE=* rake environment resque:work` (or resque:workers with a `COUNT=n`)
+
+--
+
+And *tell Rails* which queue you're using in `config/application.rb` or an initializer: `config.active_job.queue_adapter = :resque`
+
+[clockwork]: https://github.com/tomykaira/clockwork
+[resque-scheduler]: https://github.com/resque/resque-scheduler
+
+---
+
+## Background Jobs (Usage)
+
+1. Define a job in `app/jobs/my_job.rb`
+2. Give it a queue with: `queue_as :foo`
+3. Give it a perform method with any needed arguments: `def perform(bar) ... end`
+4. Call it from controllers or clockwork to schedule jobs. `MyJob.perform_later`
+
+---
+
+## Backburner
+
+There are also these articles you might refer to for more context or information:
+
+* http://feministy.io/deploying-rails-41-apps-with-resque-to-heroku
+* https://devcenter.heroku.com/articles/queuing-ruby-resque
+* https://devcenter.heroku.com/articles/clock-processes-ruby
+
+--
+
+On heroku, you'll need to add the RedisToGo addon and might need to tweak some configuration. Not too bad.
+
+--
+
+Heroku does unfortunately charge for background job workers. :-/
+ </textarea> <script src="https://gnab.github.io/remark/downloads/remark-latest.min.js"> </script> <script> var slideshow = remark.create(); </script> </body> </html>
